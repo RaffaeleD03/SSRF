@@ -9,7 +9,6 @@ return [
     
     'www.ingegneria.unicampania.it',
     'ingegneria.unicampania.it',
-
-    '192.168.56.200', //server test
 ];
+
 ?>
