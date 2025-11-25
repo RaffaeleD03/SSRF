@@ -17,7 +17,6 @@ L'ambiente è composto da 4 container isolati tramite due reti virtuali (`rete_p
 | **Attaccante** | `attaccante` | Rete Pubblica | Container Alpine con `curl` per simulare l'agente di minaccia. |
 | **Vittima (Proxy)** | `server_vulnerabile` | Dual-Homed (Pubblica + Privata) | Server Web PHP vulnerabile a SSRF. Funge da "ponte" involontario. |
 | **Target (Admin)** | `server_admin` | **Rete Privata (Isolato)** | Server interno non accessibile da internet. Contiene il file segreto `key.json`. |
-| **Test Server** | `server_test` | Rete Pubblica | Simula un sito internet legittimo (es. Google) per testare il funzionamento normale. |
 
 ---
 
