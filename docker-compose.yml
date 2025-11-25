@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  # 1. Server Admin
+  server_admin:
+    image: httpd:alpine
+    container_name: server_admin
+    networks:
+      rete_privata:
+        ipv4_address: 192.168.57.100
+    volumes:
+      - ./admin:/usr/local/apache2/htdocs/
+
+  # 2. Server Vittima (SuA)
+  server_vulnerabile:
+    image: php:apache
+    container_name: server_vulnerabile
+    networks:
+      rete_pubblica:
+        ipv4_address: 192.168.56.100
+      rete_privata:
+        ipv4_address: 192.168.57.2
+    volumes:
+      - ./sua:/var/www/html/
+
+  # 4. Attaccante
+  attaccante:
+    image: alpine
+    container_name: attaccante
+    init: true #gestore processi con PID 1 per farlo arrestare subito
+    command: /bin/sh -c "apk add --no-cache curl && tail -f /dev/null"
+    networks:
+      rete_pubblica:
+        ipv4_address: 192.168.56.101
+
+networks:
+  rete_pubblica:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.56.0/24
+  rete_privata:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.57.0/24
